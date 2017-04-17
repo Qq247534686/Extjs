@@ -2,3 +2,4 @@ D:\我的文档\Visual Studio 2015\Projects\Extjs\COMM\bin\Debug\COMM.dll
 D:\我的文档\Visual Studio 2015\Projects\Extjs\COMM\bin\Debug\COMM.pdb
 D:\我的文档\Visual Studio 2015\Projects\Extjs\COMM\obj\Debug\COMM.dll
 D:\我的文档\Visual Studio 2015\Projects\Extjs\COMM\obj\Debug\COMM.pdb
+D:\我的文档\Visual Studio 2015\Projects\Extjs\COMM\obj\Debug\COMM.csprojResolveAssemblyReference.cache
