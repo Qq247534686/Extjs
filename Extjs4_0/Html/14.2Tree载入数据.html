@@ -1,0 +1,62 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            Ext.define('Person', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    { name: 'id', type: 'int' },
+                    { name: 'name', type: 'string' }
+                ],
+                proxy: {
+                    type: 'ajax',
+                    api: {
+                        create: '',
+                        read: '/Index_001/retuTreeJson/',
+                        update: '',
+                        destroy: ''
+                    }
+                }
+
+            });
+
+            var store = Ext.create('Ext.data.TreeStore', {
+                model: 'Person',
+                root: {
+                    name: 'People',
+                    expanded: true
+                }
+            });
+
+            Ext.create('Ext.tree.Panel', {
+                renderTo: Ext.getBody(),
+                title: 'People',
+                layout:'fit',
+                store: store,
+                rootVisible:true,
+                columns: [
+                    { xtype: 'treecolumn', header: 'Name', dataIndex: 'name', flex: 1 }
+                ]
+            });
+            store.load();
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

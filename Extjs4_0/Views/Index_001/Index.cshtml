@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="~/resources/bootstrap.js"></script>
+    <script src="~/resources/ext-all.js"></script>
+    <script src="~/locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+            //基类
+            var Vehicel = Ext.extend(Object, {
+                color: '',
+                move: function () { },
+                toString: function () { }
+            });
+            //子类
+            var Car = Ext.extend(Vehicel, {
+                constructor: function () {
+                    this.color = config.color;
+                    //调用父类的构造函数
+                    Vehicel.prototype.constructor.call(this, confirm);
+                },
+                //重写move()
+                move: function (dx) { this.x += dx; },
+                toString: function () {
+                    var str = "Car is" + this.x + "miles away form the original position.\n";
+                    str += "Yhis car is :" + this.color;
+                    return str;
+                }
+            });
+            Ext.define('Car', {
+                extend: 'Vehicel',
+                constructor: function () {
+                    this.color = config.color;
+                    this.callParent(arguments);
+                },
+                move: function (dx) { this.x += dx; },
+                toString: function () {
+                    var str = "Car is" + this.x + "miles away form the original position.\n";
+                    str += "Yhis car is :" + this.color;
+                    return str;
+                }
+            })
+
+            //Ext.MessageBox.alert("ExtJS", "Hello ExtJS");
+
+        });
+
+
+    </script>
+
+</body>
+</html>

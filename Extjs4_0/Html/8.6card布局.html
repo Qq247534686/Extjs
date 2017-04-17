@@ -1,0 +1,67 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+           var count = 0;
+			var btnHandler = function(){
+				var layout = panel.getLayout();
+				if(layout != null){
+					count = (count >= panel.items.length-1) ? 0 : count+1;
+					layout.setActiveItem(count);
+				}
+			}
+			
+			var panel = new Ext.Panel({
+				title:'Card Layout',
+				width:300,
+				height:280,
+				layout:'card',
+				activeItem:count,
+				layoutConfig:{
+					deferredRender:true
+				},
+				tbar:[
+				  { xtype:'button', text:'Switch', handler:btnHandler}
+				],
+				items:[
+				   {
+					   xtype:'panel',
+					   title:'InnerPanel1',
+					   html:'To be or not to be'
+					},
+					{
+					   xtype:'panel',
+					   title:'InnerPanel2',
+					   html:'That\'s the question'
+					},
+					{
+					   xtype:'panel',
+					   title:'InnerPanel3',
+					   html:'Let it be'
+				    }
+				],
+                renderTo:Ext.getBody()
+			});
+           
+
+        });
+        //listeners center 
+        
+
+    </script>
+
+</body>
+</html>

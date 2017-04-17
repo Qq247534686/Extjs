@@ -1,0 +1,77 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>定时调用函数</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+   
+</head>
+<body>
+   
+    <div id="myDiv" style="width:200px;height:300px;background-color:azure;"></div>
+    <div id="TimeOne" style="color:red;"></div>
+    <div id="TimeTow" style="color:blue;"></div>
+    <script>
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+           //Ext.util.DelayedTask()指定时间后调用
+            //Ext.util.TaskRunner()生成独立任务，间隔调用
+            /*---------------------DelayedTask---------------------
+            function addHello() {
+                alert('123');
+            };
+             function showName(name,age,sex) {
+                 Ext.Msg.alert('', '姓名:' + name + '，年龄:' + age + '，性别:' + sex);
+            };
+            var task = new Ext.util.DelayedTask();
+            //task.delay(3000,addHello,this,null);//不带参数
+            var myInfo = ['LJC', 18, '男'];
+            task.delay(3000,showName,this,myInfo);
+            */
+            /*---------------------TaskRunner---------------------
+            //定义方法
+            function sayHi() {
+                $('#myDiv').append('Hi ');
+            };
+            //定义任务
+            var task = {
+                run: sayHi,
+                interval: 1000
+            };
+            Ext.TaskManager.start(task);//开始指定任务
+            //Ext.TaskManager.stop(task);//停止指定任务
+            //Ext.TaskManager.stopAll();//停止所有任务
+            */
+            //--------------------TaskRunner多任务---------------------
+            function showTimeOne() {
+                Ext.fly('TimeOne').update(new Date().toLocaleString());
+
+            }
+            function showTimeTow() {
+                Ext.fly('TimeTow').update(new Date().toLocaleString());
+            }
+             //定义任务
+            var taskOne = {
+                run: showTimeOne,
+                interval: 1000
+            };
+             //定义任务
+            var taskTow = {
+                run: showTimeTow,
+                interval: 1000
+            };
+              Ext.TaskManager.start(taskOne);//开始指定任务
+              Ext.TaskManager.start(taskTow);//开始指定任务
+            
+        });
+
+
+    </script>
+
+</body>
+</html>

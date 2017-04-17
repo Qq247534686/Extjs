@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NorthwindModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Ext_Tree">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rid" Type="int" />
+    <Property Name="parentId" Type="int" />
+    <Property Name="text" Type="varchar" MaxLength="100" />
+    <Property Name="index" Type="varchar" MaxLength="100" />
+    <Property Name="expanded" Type="bit" />
+    <Property Name="leaf" Type="bit" />
+    <Property Name="root" Type="bit" />
+    <Property Name="href" Type="varchar" MaxLength="100" />
+    <Property Name="qtitle" Type="varchar" MaxLength="100" />
+    <Property Name="qtip" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityContainer Name="NorthwindModelStoreContainer">
+    <EntitySet Name="Ext_Tree" EntityType="Self.Ext_Tree" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

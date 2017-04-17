@@ -1,0 +1,65 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>3-显示多列树</title>
+    <link href="../../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../../resources/bootstrap.js"></script>
+    <script src="../../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+         Ext.define('treeData', {
+                extend: 'Ext.data.Model',
+                fields: ['text', 'url'],
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json',
+                    }
+                }
+            });
+        Ext.onReady(function () {
+            var root = {
+                text: '书籍',
+                url: 'http://www.qeefee.com/zt-extjs',
+                children: [
+                {
+                    text: '哲学', leaf: false, expanded: true, url: 'http://www.qeefee.com/zt-extjs',
+                    children: [
+                      { text: '马克思价值观', leaf: true, url: 'http://www.qeefee.com/zt-extjs' },
+                      { text: '毛泽东思想', leaf: true, url: 'https://www.baidu.com/' },
+                      { text: '人文价值观', leaf: true, url: 'http://extjs.org.cn/' }
+                    ]
+                }
+                ]
+            };
+            Ext.create('Ext.tree.TreePanel', {
+                model: 'treeData',//方法一加fields
+                title: 'This is a Tree',
+                root:root,
+                rootVisible: true,
+                autoScroll: true,
+                //defaults: { // defaults 将会应用所有的子组件上,而不是父容器
+                //    xtype: 'treecolumn'
+                //},
+                columns: [
+                       {xtype: 'treecolumn', dataIndex: 'text', text: '名称', width:200 },
+                       {xtype: 'treecolumn', dataIndex: 'url', text: '地址', width:200  }
+                ],
+                renderTo: 'container'
+
+            });
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="ss"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+           
+			var panel = new Ext.Panel({
+				title:'Border Layout',
+				width:800,
+				height:600,
+				frame:false,
+				layout:'border',
+				defaultType:'panel',
+				defaults:{
+					headerCfg:{
+					    tag: 'center',
+					}
+				},
+				items:[
+				   { title: '朱雀', region: 'south', html: '朱雀峙南'},
+				   { title: '玄武', region: 'north', html: '玄武拱北' },
+				   { title: '青龍', region: 'east', html: '青龍蟠東' },
+				   { title: '白虎', region: 'west', html: '白虎踞西' },
+				   { region:'center', autoEl:'center' ,html:'玄武拱北，朱雀峙南，青龍蟠東，白虎踞西' }	
+				],
+                renderTo:'ss'
+			});
+           
+
+        });
+        //listeners center 
+        
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        var www = window.innerWidth;
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+
+            var panel = new Ext.Panel({
+                title: 'Table Layout',
+                width: 300,
+                layout: {
+                    type: 'table',
+                    // The total column count must be specified here
+                    columns: 3
+                },
+                defaults: {
+                    width: 100,
+                    height: 50,
+                    autoEl: 'center',
+                },
+               defaults:{
+					width:100,
+					height:50,
+					autoEl:'center',
+				},
+                items: [
+				   { html: '1', colspan: 3, width: 300 },
+				   { html: '2', rowspan: 2, height: 100 },
+				   { html: '3' },
+				   { html: '4', rowspan: 2, height: 100 },
+				   { html: '5' }, { html: '6' },
+				   { html: '7' }, { html: '8' },
+				   { html: '9', colspan: 3, width: 300 }
+                ],
+                renderTo: Ext.getBody()
+
+            });
+
+
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>

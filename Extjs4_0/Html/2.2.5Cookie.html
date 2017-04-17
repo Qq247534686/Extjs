@@ -1,0 +1,34 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>2.2.5Cookie</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+           //设置Cookie
+           Ext.util.Cookies.set('myName','LJC')
+           //获得Cookie
+           Ext.util.Cookies.get('myName')
+           //清除Cookie
+           Ext.util.Cookies.clear('myName', 'LJC')
+           //Cookie存储对象
+           var myObject = { name: 'LJC', age: 20, sex: '男' };
+           Ext.util.Cookies.set('myInfo', Ext.encode(myObject));//对象转json字符串存储
+           var myInfo = Ext.decode(Ext.util.Cookies.get('myInfo'));//json字符串存储转对象
+           Ext.MessageBox.alert(myInfo.name);
+        });
+
+
+    </script>
+
+</body>
+</html>

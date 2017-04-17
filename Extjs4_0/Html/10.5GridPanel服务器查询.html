@@ -1,0 +1,174 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="table"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var AllSelectedRecords = [];
+            var store = new Ext.data.JsonStore({
+                fields: [
+                    { name: 'id', type: 'int' },
+                    { name: 'artist', type: 'string' },
+                    { name: 'title', type: 'string' },
+                    { name: 'rate', type: 'int' },
+                    { name: 'price', type: 'float' },
+                    { name: 'date', type: 'date', dateformat: 'Y/m/d H:i:s' }
+                ],
+                listeners: {
+                    load: function (me, records, success, opts) {
+                        if (!success || !records || records.length == 0)
+                            return;
+                        //根据全局的选择，初始化选中的列
+                        var selModel = grid.getSelectionModel();
+                        Ext.Array.each(AllSelectedRecords, function () {
+                            for (var i = 0; i < records.length; i++) {
+                                var record = records[i];
+                                if (record.get("id") == this.get("id")) {
+                                    selModel.select(record, true, true);    //选中record，并且保持现有的选择，不触发选中事件
+                                }
+                            }
+                        });
+                    }
+                },
+                pageSize: 5,
+                proxy: {
+                    actionMethods: {
+                        create: 'POST',
+                        read: 'POST', // by default GET
+                        update: 'POST',
+                        destroy: 'POST'
+                    },
+                    type: 'ajax',
+                    extraParams: { theName: "" },
+                    url: '/Index_001/getServerGrid/',
+                    reader: {
+                        type: 'json',
+                        totalProperty: 'count',
+                        root: 'data'
+                    }
+                }
+            });
+
+            var queryStore = function () {
+                var targeString = Ext.getCmp('queryText').getValue();
+                if (targeString == '') {
+                    store.getProxy().extraParams.theName = "";
+                    return;
+                }
+                else {
+                    var lastOptions = store.lastOptions;//保存当前表格的状态
+                    store.getProxy().extraParams.theName = targeString;
+                    store.reload(lastOptions);
+                }
+
+            };
+            var grid = new Ext.grid.GridPanel({
+                title: 'My GridPanel',
+                width: 1200,
+                height: 400,
+                store: store,
+                viewConfig: {
+                    forceFit: true
+                },
+                defaults: {
+                    columns: { align: 'center' }
+                },
+                listeners: {
+                    render: function (obj, eOpts) {
+                    }
+                },
+                selModel: new Ext.selection.CheckboxModel({
+                    mode: "MULTI",
+                    checkOnly: true,
+                    listeners: {
+                        deselect: function (me, record, index, opts) {
+                            AllSelectedRecords = Ext.Array.filter(AllSelectedRecords, function (item) {
+                                return item.get("id") != record.get("id");
+                            });
+                        },
+                        select: function (me, record, index, opts) {
+                            AllSelectedRecords.push(record);
+                        }
+                    }
+                }),
+                columns: [
+                   
+                    { header: '序號', dataIndex: 'id', width: 80 },
+                    { header: '歌手', dataIndex: 'artist', width: 200 },
+                    { header: '歌名', dataIndex: 'title', width: 120 },
+                    {
+                        header: '評分', dataIndex: 'rate', width: 80, sortable: true, renderer: function (value, metData, record, rowIndex, colIndex, store) {
+                            var staInt = parseInt(value);
+                            var result = '<span style="color:green;">' + value + '</span>';;
+                            if (staInt > 60) {
+                                result = '<span style="color:red;">' + value + '</span>';
+                            }
+                            return result;
+                        }
+                    },
+                    { header: '价格', dataIndex: 'price', width: 80, renderer: Ext.util.Format.numberRenderer('$0.000') },
+                    {
+                        header: '日期', dataIndex: 'date', width: 250, renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s')
+                    },
+                    {
+                        header: '编辑', align: 'center', width: 120, renderer: function (value, metData, record, rowIndex, colIndex, store) {
+                            var result = ' <img src="../Content/Img/edit.png" />';
+                            return result;
+                        }
+                    },
+                    {
+                        header: '删除', align: 'center', width: 120, renderer: function (value, metData, record, rowIndex, colIndex, store) {
+                            var result = ' <img src="../Content/Img/delete.png" />';
+                            return result;
+                        }, listeners: {
+                            click: function (value, metData, record, rowIndex, colIndex, store) {
+                                Ext.Msg.alert("提示", record);
+                            }
+                        }
+                    },
+                     {
+                         header: '自定义', align: 'center', width: 120, renderer: function (value, metData, record, rowIndex, colIndex, store) {
+                             var s1 = '<select id="Select1" style="width:100px" ><option>A</option><option>B</option><option>C</option></select>';
+                             return s1;
+                         }
+                     }
+
+                ],
+                tbar: [
+                        { xtype: 'textfield', emptyText: '请输入关键字...', width: 200, id: 'queryText' },
+                        { xtype: 'button', text: '查询', handler: queryStore }
+                ],
+                dockedItems: [{
+                    xtype: 'pagingtoolbar',
+                    store: store,   // GridPanel中使用的数据
+                    dock: 'bottom',
+                    displayInfo: true
+                }],
+                renderTo: 'table'
+            });
+            store.load({
+                params: {
+                    // 如果使用分页，在第一次加载时，指定params
+                    start: 0,
+                    limit: 5
+                }
+            });
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

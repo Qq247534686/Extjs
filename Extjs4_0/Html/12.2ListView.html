@@ -1,0 +1,115 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../resources/PagingMemoryProxy.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+    <style type="text/css">
+        b {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+
+            Ext.ns('Ext.ux.data');
+            var employees = [
+                 { emp_id: 1, name: 'David Wang', title: 'CEO', gender: 'M' },
+                 { emp_id: 2, name: 'Joseph Chung', title: 'CIO', gender: 'M' },
+                 { emp_id: 3, name: 'Aron Shawn', title: 'CFO', gender: 'M' },
+                 { emp_id: 4, name: 'Landy Cheng', title: 'SA.', gender: 'F' },
+                 { emp_id: 5, name: 'Bonita Chuwn', title: 'SA.', gender: 'F' },
+                 { emp_id: 6, name: 'Sharron Wu', title: 'ENG', gender: 'F' },
+                 { emp_id: 7, name: 'Bob Li', title: 'SAL', gender: 'M' },
+                 { emp_id: 8, name: 'St. Elgar', title: 'Saint', gender: 'M' }
+            ];
+            var store = new Ext.data.JsonStore({
+                data: employees,
+                pageSize: 5,
+                fields: [
+				   { name: 'id', mapping: 'emp_id', type: 'int' },
+				   { name: 'name', mapping: 'name', type: 'string' },
+				   { name: 'title', mapping: 'title', type: 'string' },
+				   { name: 'gender', mapping: 'gender', type: 'string' }
+                ],
+                proxy: {
+                    type: 'memory',
+                }
+            });
+            var genderTpl =
+				'<tpl if="gender==\"F\"">' +
+				    '女' +
+				'</tpl>' +
+				'<tpl if="gender==\"M\"">' +
+			    	'男' +
+				'</tpl>';
+            var listview = new Ext.list.ListView({
+                store: store,
+                layout: 'fit',
+                style: {
+                    border: '0'
+                },
+                selType: "checkboxmodel",
+                selModel: {
+                    injectCheckbox: 0,
+                    mode: "SIMPLE",     //"SINGLE"/"SIMPLE"/"MULTI"
+                    checkOnly: true     //只能通过checkbox选择
+                },
+                columns: [
+			    { header: '序號', dataIndex: 'id', width: 120 },
+			    { header: '姓名', dataIndex: 'name' },
+			    {
+			        header: '職稱', dataIndex: 'title', renderer: function (value) {
+			            switch (value) {
+			                case 'SA.': return '特助'; break;
+			                case "ENG": return '工程師'; break;
+			                case 'SAL': return '業務'; break;
+			                case "Saint": return '聖人'; break;
+			                case 'CEO': return '執行長'; break;
+			                case "CFO": return '財務長'; break;
+			                case "CIO": return '資訊長'; break;
+			                default: return '武林盟主'; break;
+			            }
+			        },
+			        width: 120
+			    },
+			    { header: '性別', dataIndex: 'gender', tpl: genderTpl, align: 'right', width: 120 }
+                ],
+                autoScroll: true
+            });
+
+            var panel = new Ext.Panel({
+                title: 'ListView',
+                width: 550,
+                height: 400,
+                items: [
+					listview
+                ],
+                bbar: { xtype: "pagingtoolbar", store: store, displayInfo: true },
+                frame: true
+            });
+          
+
+
+            panel.render('container');
+            store.load({ params: { start: 0, limit: 2 } });
+
+
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

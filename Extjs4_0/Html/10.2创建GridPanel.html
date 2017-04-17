@@ -1,0 +1,141 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div>
+        <div id="container1" style="float:left"></div>
+        <div id="container2" style="float:unset"></div>
+    </div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var lockStore = new Ext.data.JsonStore({
+                fields: ['id', 'name', 'info', 'created'],
+                data: [
+				    { id: 1, name: 'aitch', info: 'Funny man', created: '2011/02/28' },
+				    { id: 2, name: 'david', info: 'Canon man', created: '2011/02/25' },
+				    { id: 3, name: 'john', info: 'Decent man', created: '2011/02/20' },
+                    { id: 4, name: 'aitch', info: 'Funny man', created: '2011/02/28' },
+				    { id: 5, name: 'david', info: 'Canon man', created: '2011/02/25' },
+				    { id: 6, name: 'john', info: 'Decent man', created: '2011/02/20' },
+                    { id: 7, name: 'aitch', info: 'Funny man', created: '2011/02/28' },
+				    { id: 8, name: 'david', info: 'Canon man', created: '2011/02/25' },
+				    { id: 9, name: 'john', info: 'Decent man', created: '2011/02/20' }
+                ],
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json'
+                    }
+                }
+            });
+            lockStore.sort("id", "desc");//初始化id降序
+            //lockStore.sort("id", "asc");//初始化id降序
+            Ext.define('User', {
+                extend: 'Ext.data.Model',
+                fields: ['id', 'name', 'age']
+            });
+
+
+            var grid1 = new Ext.grid.GridPanel({
+                title: 'GridPanel',
+                width: 400,
+                height: 200,
+                padding: 2,
+                store: lockStore,
+                viewConfig: {
+                    forceFit: true
+                },
+                columns: [
+				    { header: 'id', dataIndex: 'id', sortable: false },//sortable是否支持排序，默认支持
+				    { header: 'name', dataIndex: 'name', resizable: false },//禁止手动拉伸列的宽度，默认可以
+				    { header: 'info', dataIndex: 'info' },
+				    { header: 'created', dataIndex: 'created' }
+                ],
+                defaults: {//默认设置
+                    //resizable:false,
+                    //width:200
+                },
+                tools: [
+				   {
+				       id: 'close', qtip: '關閉', listeners: {
+				           'click': function () {
+				               grid1.close();
+				           }
+				       }
+				   },
+				   { id: 'minimize', qtip: '最小化' },
+				   { id: 'maximize', qtip: '最大化' },
+				   { id: 'restore', qtip: '復原' },
+				   { id: 'refresh', qtip: '重新載入' }
+                ],
+                collapsible: true//是否启用收缩，默认不启用
+            });
+            grid1.setAutoScroll(false);//是否显示滚动条
+
+            var serverStore = new Ext.data.JsonStore({
+                fields: [
+				   'id', 'name', 'age'
+                ],
+                proxy: {
+                    type: 'ajax',
+                    actionMethods: {
+                        create: 'POST',
+                        read: 'POST', // by default GET
+                        update: 'POST',
+                        destroy: 'POST'
+                    },
+                    url: '/Index_001/getGridPanel/',
+                    reader: {
+                        type: 'json',
+                        totalProperty: 'count',
+                        root: 'data'
+                    }
+                }
+            });
+
+            var grid2 = new Ext.grid.GridPanel({
+                title: 'GridPane2',
+                width: 400,
+                height: 200,
+                padding: 2,
+                store: serverStore,
+                viewConfig: {
+                    forceFit: true//列的自动宽度
+                },
+                tools: [{
+                    type: 'refresh',
+                    tooltip: 'Refresh form Data',
+                    // hidden:true,
+                    handler: function (event, toolEl, panel) {
+                         serverStore.load();
+                    }
+                }],
+                columns: [
+				    { header: 'id', dataIndex: 'id' },
+				    { header: 'name', dataIndex: 'name' },
+				    { header: 'age', dataIndex: 'age' }
+                ]
+
+            });
+            serverStore.load();
+            grid1.render('container1');
+            grid2.render('container2');
+
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

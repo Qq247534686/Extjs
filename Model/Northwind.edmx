@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NorthwindModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ext_Tree">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rid" Type="int" />
+          <Property Name="parentId" Type="int" />
+          <Property Name="text" Type="varchar" MaxLength="100" />
+          <Property Name="index" Type="varchar" MaxLength="100" />
+          <Property Name="expanded" Type="bit" />
+          <Property Name="leaf" Type="bit" />
+          <Property Name="root" Type="bit" />
+          <Property Name="href" Type="varchar" MaxLength="100" />
+          <Property Name="qtitle" Type="varchar" MaxLength="100" />
+          <Property Name="qtip" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityContainer Name="NorthwindModelStoreContainer">
+          <EntitySet Name="Ext_Tree" EntityType="Self.Ext_Tree" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NorthwindModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NorthwindEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ext_Tree" EntityType="NorthwindModel.Ext_Tree" />
+        </EntityContainer>
+        <EntityType Name="Ext_Tree">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rid" Type="Int32" />
+          <Property Name="parentId" Type="Int32" />
+          <Property Name="text" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="index" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="expanded" Type="Boolean" />
+          <Property Name="leaf" Type="Boolean" />
+          <Property Name="root" Type="Boolean" />
+          <Property Name="href" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="qtitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="qtip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NorthwindModelStoreContainer" CdmEntityContainer="NorthwindEntities">
+          <EntitySetMapping Name="Ext_Tree">
+            <EntityTypeMapping TypeName="NorthwindModel.Ext_Tree">
+              <MappingFragment StoreEntitySet="Ext_Tree">
+                <ScalarProperty Name="qtip" ColumnName="qtip" />
+                <ScalarProperty Name="qtitle" ColumnName="qtitle" />
+                <ScalarProperty Name="href" ColumnName="href" />
+                <ScalarProperty Name="root" ColumnName="root" />
+                <ScalarProperty Name="leaf" ColumnName="leaf" />
+                <ScalarProperty Name="expanded" ColumnName="expanded" />
+                <ScalarProperty Name="index" ColumnName="index" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="rid" ColumnName="rid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

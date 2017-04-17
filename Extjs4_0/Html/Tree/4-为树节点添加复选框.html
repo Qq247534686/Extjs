@@ -1,0 +1,88 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>4.为树节点添加复选框</title>
+    <link href="../../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../../resources/bootstrap.js"></script>
+    <script src="../../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var root = {
+                text: '书籍',
+                expanded: true,
+                checked:false,
+                children: [
+                {
+                    text: '哲学', leaf: false, expanded: true,
+                    children: [
+                      { text: '马克思价值观', leaf: true },
+                      { text: '毛泽东思想', leaf: true },
+                      { text: '人文价值观', leaf: true }
+                    ]
+                },
+                {
+                    text: '历史', leaf: false,
+                    children: [
+                      { text: '唐朝任务', leaf: true },
+                      { text: '岳飞传', leaf: true },
+                      { text: '清朝的衰败', leaf: true }
+                    ]
+                },
+                 {
+                     text: '名著', leaf: false,
+                     children: [
+                       { text: '三国演义', leaf: true },
+                       { text: '西游记', leaf: true },
+                       { text: '红楼梦', leaf: true }
+                     ]
+                 },
+                ]
+            };
+            var changeChecked = function(node, cheched)
+            {
+               
+                if (Ext.isArray(node)) {
+                    Ext.Array.each(node, function (arrayValue, index, countriesItSelf) {
+                        changeChecked(arrayValue, cheched);
+                    })
+                }
+                else {
+                    node.set('checked', cheched)
+                    if (node.childNodes.length > 0) {
+                        changeChecked(node.childNodes, cheched);
+                    }
+                }
+            }
+            Ext.create('Ext.tree.TreePanel', {
+                root: root,
+                title: 'This is a Tree',
+                rootVisible: true,
+                autoScroll: true,
+                renderTo: 'container',
+                listeners: {
+                    checkchange: function (node, cheched) {
+                        if (node.childNodes.length > 0) {
+                            changeChecked(node.childNodes, cheched);
+                        }
+                    }
+                }
+            });
+
+
+
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

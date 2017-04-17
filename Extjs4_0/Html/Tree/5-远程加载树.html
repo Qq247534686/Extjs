@@ -1,0 +1,48 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>5.远程加载树</title>
+    <link href="../../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../../resources/bootstrap.js"></script>
+    <script src="../../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+			Ext.create("Ext.data.TreeStore",{
+				id:'treeStore',
+                proxy: {
+                    type: 'ajax',
+                    url : 'TreeData/tree.js'
+                }
+			});
+			
+			Ext.create("Ext.tree.Panel",{
+				width:200,
+				height:300,
+				renderTo:Ext.getBody(),
+				store:"treeStore",
+				rootVisible:false,
+				viewConfig:{
+					listeners:{
+						refresh:function(){
+							this.select(0);
+						}
+					}
+				}
+			})
+
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

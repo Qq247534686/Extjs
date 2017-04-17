@@ -1,0 +1,101 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+           var basicInfoFieldSet = {
+				xtype:'fieldset',
+				columnWidth:.5,
+				defaultType:'textfield',
+				layout:'form',
+				title:'基本資料',
+				labelAlign:'right',
+				labelWidth:60,
+				height:180,
+				defaults:{
+					labelSeparator:'：'
+				},
+				items:[
+				   { xtype:'box', autoEl:{ tag:'img', title:'123',src:'../resources/ext-theme-neptune/images/shared/icon-error.png'}, style:'padding:5px;' },
+				   { fieldLabel:'姓名' },
+				   { fieldLabel:'帳號' },
+				   { fieldLabel:'密碼', inputType:'password' },
+				   { fieldLabel:'Email' }
+				]
+			}
+            
+			var advancedInfoFieldSet = {
+				xtype:'fieldset',
+				columnWidth:.5,
+				defaultType:'textfield',
+				layout:'form',
+				title:'進階資料',
+				labelAlign:'right',
+				labelWidth:60,
+				height:180,
+				defaults:{
+					labelSeparator:'：'
+				},
+				items:[
+				   { xtype:'combo', fieldLabel:'性別', store:['男', '女'], width:176 },
+				   { xtype:'container', 
+					 fieldLabel:'電話',
+					 layout:'hbox',
+					 defaultType:'textfield',
+					 items:[
+					    { name:'zoneNum', width:30 },
+					    { xtype:'box', html:'-' },
+					    { name:'phoneNum' }
+					 ]  
+				   }
+				]
+			}
+
+			var topBlock = {
+				xtype:'panel',
+				frame:false,
+				layout:'column',
+				anchor:'0, 40%',
+				items:[
+					basicInfoFieldSet,
+					advancedInfoFieldSet
+				]
+			}
+
+			var description = {
+				xtype:'htmleditor',
+				anchor:'0, 60%'
+			};
+			
+			var panel = new Ext.Window({
+				title:'Composite Layout',
+				width: 520,
+                frame:true,
+				height:480,
+				layout:'anchor',
+				items:[
+					topBlock,
+					description
+				]
+			});
+			panel.show();
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>

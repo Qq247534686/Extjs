@@ -1,0 +1,93 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="table"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var data = [
+			   { id: 1, artist: 'Michael Jackson', title: 'Dirty Dianna', rate: '5' },
+			   { id: 2, artist: 'U2', title: 'With or without you', rate: '5' },
+			   { id: 3, artist: 'Michael Jackson', title: 'Remeber the time', rate: '5' },
+			   { id: 4, artist: 'Michael Jackson', title: 'Beat It', rate: '4' },
+			   { id: 5, artist: 'Pink', title: 'Lonely Girl', rate: '4' },
+			   { id: 6, artist: 'U2', title: 'One', rate: '5' },
+			   { id: 7, artist: 'Christina Aguilera', title: 'Reflection', rate: '4' },
+			   { id: 8, artist: 'Elton John', title: 'This train don\'t stop', rate: '3' },
+			   { id: 9, artist: 'Elton John', title: 'Original Sin', rate: '3' },
+			   { id: 10, artist: 'Michael Jackson', title: 'Blood on the dance floor', rate: '4' }
+            ];
+            var store = new Ext.data.JsonStore({
+                fields: ['id', 'artist', 'title', 'rate'],
+                data: data,
+                pageSize: 5,
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json'
+                    }
+                }
+            });
+            var rateFieldEditor = {
+				xtype:'numberfield',
+				maxValue:100,
+				maxText:'最大不可超過5',
+				minValue:0,
+				minText:'最小不可低於0'
+			};
+            var queryStore = function () {
+                var targeString = Ext.getCmp('queryText').getValue();
+                if (targeString == '') {
+                    return;
+                }
+                store.filterBy(function (record, id) {
+                    if (record.get('artist') == targeString || record.get('title') == targeString) {
+                        return true;
+                    }
+                    return false;
+                })
+            };
+            var grid = new Ext.grid.GridPanel({
+                title: 'My GridPanel',
+                width: 500,
+                height: 400,
+                store: store,
+                viewConfig: {
+                    forceFit: true
+                },
+                selType: 'rowmodel',
+                plugins: [
+                    Ext.create('Ext.grid.plugin.RowEditing', {
+                        clicksToEdit: 1
+                    })
+                ],
+                columns: [
+                    { header: '序號', dataIndex: 'id', width: 40 },
+				    { header: '歌手', dataIndex: 'artist', width: 100, editor: 'textfield' },
+				    { header: '歌名', dataIndex: 'title', width: 120, editor: 'textfield' },
+				    { header: '評分', dataIndex: 'rate', width: 80, sortable: true, editor:rateFieldEditor }
+                ],
+                tbar: [
+                        { xtype: 'textfield', emptyText: '请输入关键字...', width: 200, id: 'queryText' },
+                        { xtype: 'button', text: '查询', handler: queryStore }
+                ],
+                renderTo: 'table'
+            });
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

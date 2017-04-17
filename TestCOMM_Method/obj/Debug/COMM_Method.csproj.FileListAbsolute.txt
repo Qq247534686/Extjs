@@ -1,0 +1,8 @@
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\bin\Debug\TestCOMM_Method.exe.config
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\bin\Debug\TestCOMM_Method.exe
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\bin\Debug\TestCOMM_Method.pdb
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\bin\Debug\COMM.dll
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\bin\Debug\COMM.pdb
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\obj\Debug\TestCOMM_Method.exe
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\obj\Debug\TestCOMM_Method.pdb
+D:\我的文档\Visual Studio 2015\Projects\Extjs\TestCOMM_Method\obj\Debug\COMM_Method.csprojResolveAssemblyReference.cache

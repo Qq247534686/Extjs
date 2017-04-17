@@ -1,0 +1,122 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <script>
+        var xx = window.innerHeight - 35;
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+           Ext.ns('ljc.MyWindow')
+            var dd = Ext.define('ljc.MyWindow', {
+                extend:'Ext.window.Window',
+                minimizable: true,
+                width: 300,
+                height: 160,
+                maximizable: true,
+                closeAction: 'hide',
+                initComponent: function () {
+                   ljc.MyWindow.superclass.initComponent.call(this);
+                    this.maximized = false;
+                    this.minimized = false;
+                    this.orgX = 0;
+                    this.orgY = 0;
+                },// eo initComponent()
+
+                isMinimized: function () {
+                    return this.minimized;
+                },// eo isMinimized()
+
+                isMaximized: function () {
+                    return this.maximized;
+                },//eo isMaximized
+
+                maximize: function () {
+                    if (this.isMinimized()) {
+                        this.backtoOrgSizeAndPos();
+                        this.maximized = false;
+                    } else {
+                        ljc.MyWindow.superclass.maximize.call(this);
+                        this.maximized = true;
+                    }
+                },// eo maximize()
+
+                minimize: function () {
+                    if (this.isMaximized()) {
+                        this.restore();
+                    } else if (!this.isMinimized() && !this.isMaximized()) {
+                        this.orgX = this.x;
+                        this.orgY = this.y;
+                        this.collapse();
+                        this.setPagePosition(0, xx);
+                        this.minimized = true;
+                    } else if (this.isMinimized()) {
+                        this.backtoOrgSizeAndPos();
+                    }
+                },// eo minimize()
+
+                backtoOrgSizeAndPos: function () {
+                    this.expand();
+                    this.setPagePosition(this.orgX, this.orgY);
+                    this.minimized = false;
+                    this.maximized = false;
+                }// eo backtoOrgSizeAndPos()
+            });
+
+            var formPanel = {
+              	xtype:'form',
+    		 	frame:true, 
+    		 	height:130,
+    		 	border:false,
+    		 	padding:5,
+    		 	labelAlign:'right',
+                items: [{
+                    xtype: 'textfield',
+                    name: 'name',
+                    fieldLabel: 'Name',
+                    allowBlank: false  // 不能为空
+                }, {
+                    xtype: 'textfield',
+                    name: 'email',
+                    fieldLabel: 'Email Address',
+                    vtype: 'email'  // 输入格式为邮箱格式
+                }],
+                fbar: [
+                	{ xtype: 'button', text: '登入' }
+                ]
+            };
+            var window = new ljc.MyWindow({
+                title: 'Window',
+                closable: true,//显示关闭图标
+                closeAction : 'hide',//设置关闭是为隐藏而不是销毁
+                modal: false,
+                items: [
+                     formPanel
+                ]
+            });
+            window.show();
+            new Ext.Button({
+                text: 'show',
+                listeners: {
+                    click: function (event, eventTag) {
+                        window.show();
+                    }
+                },
+                renderTo:Ext.getBody()
+            });
+
+        });
+
+
+    </script>
+
+</body>
+</html>

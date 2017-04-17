@@ -1,0 +1,54 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var timeTest = /^([1-9]+)$/i;
+            Ext.apply(Ext.form.VTypes, {//重写
+                time: function (val, field) {
+                    return timeTest.test(val);
+                },
+                timeText: '錯誤的時間格式，必須為：数字！',
+                timeMask: /[\d|\w]/i//限制用户输入的字符为其中的表达式所限定的字符
+            });
+
+            var form = new Ext.form.FormPanel({
+                title: 'FormPanel',
+                id: 'ff',
+                width: 500,
+                height: 100,
+                frame: true,
+                url: '/Index_001/up',
+                labelWidth: 35,
+                items: [
+				   {
+				       xtype: 'textfield',
+				       id: 'tt',
+				       fieldLabel: 'Time',
+				       vtype: 'time',
+				       msgTarget: 'side'
+				   }
+
+                ],
+                renderTo: Ext.getBody()
+            });
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>

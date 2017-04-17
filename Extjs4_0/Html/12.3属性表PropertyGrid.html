@@ -1,0 +1,91 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var gridss = new Ext.grid.PropertyGrid({
+                title: 'Personal Info',
+                autoHeight: true,
+                width: 300,
+                source: {
+                    "(name)": "My Object",
+                    "Created": Ext.Date.parse('10/15/2006', 'm/d/Y'),
+                    "Available": false,
+                    "Version": 0.01,
+                    "Description": "A test object"
+                },
+                renderTo: Ext.getBody()
+            });
+            //gridss.setSource({
+            //    '1. Name': 'Aitch Chung',
+            //    '2. Age': '28',
+            //    '3. Height': '5.6',
+            //    '4. Weight': '187'
+            //});
+
+            gridss.on('afteredit', function (evt) {
+                console.log(grid.getSource());
+            }, this);
+
+            var employees = [
+                 { emp_id: 1, name: 'David Wang', title: 'CEO', gender: 'M', dob: '1983/02/02' },
+                 { emp_id: 2, name: 'Joseph Chung', title: 'CIO', gender: 'M', dob: '1980/03/22' },
+                 { emp_id: 3, name: 'Aron Shawn', title: 'CFO', gender: 'M', dob: '1977/04/30' },
+                 { emp_id: 4, name: 'Landy Cheng', title: 'SA.', gender: 'F', dob: '1974/05/02' },
+                 { emp_id: 5, name: 'Bonita Chuwn', title: 'SA.', gender: 'F', dob: '1971/06/12' },
+                 { emp_id: 6, name: 'Sharron Wu', title: 'ENG', gender: 'F', dob: '1968/07/22' },
+                 { emp_id: 7, name: 'Bob Li', title: 'SAL', gender: 'M', dob: '1965/08/31' },
+                 { emp_id: 8, name: 'St. Elgar', title: 'Saint', gender: 'M', dob: '1962/09/02' }
+            ];
+
+            var store = new Ext.data.JsonStore({
+                data: employees,
+                proxy: {
+                    type: 'memory',
+                },
+                fields: [
+				   { name: 'name', type: 'string' },
+				   { name: 'title', type: 'string' },
+				   { name: 'gender', type: 'string' },
+				   { name: 'dob', type: 'date', dateFormat: 'Y/m/d' }
+                ]
+            });
+            store.on('load', function () {
+                grid.setSource(store.getAt(1).data);
+            }, this);
+
+            var grid = new Ext.grid.PropertyGrid({
+                title: 'Personal Info',
+                autoHeight: true,
+                width: 300,
+                renderTo: 'container'
+                //store: store
+            });
+
+            grid.on('afteredit', function (evt) {
+                console.dir(grid.getSource());
+            }, this);
+
+            store.load();
+
+
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

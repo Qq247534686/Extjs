@@ -1,0 +1,113 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="errMsg"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+
+            var form = new Ext.form.FormPanel({
+                title: 'FormPanel',
+                width: 600,
+                height: 500,
+                frame: true,
+                fileUpload: true,//启用文件上传
+                defaultType: 'textfield',
+                items: [
+
+
+				   { fieldLabel: 'Username', name: 'u', id: 'u' },
+				   { fieldLabel: 'Password', inputType: 'password', name: 'p', id: 'p' },
+                   {
+                       fieldLabel: 'Email',
+                       minLength: 8, minLengthText: '長度不可小於8個字元',
+                       maxLength: 40, maxLengthText: '最大不可超過40個字元',
+                       allowBlank: false, blankText: '本欄為不可空白',
+                       vtypeText: '無效的EMAIL帳號',
+                       emptyText: '請輸入您的EMAIL',
+                       grow: true,//当输入的内容超过文本框时文本框自动变长
+                       growMin: 140,//最小长度
+                       //maskRe:/[0-9]/i,//输入的类型范围
+                       msgTarget: 'errMsg',//错误消息位置：under下方，qtip默认的，鼠标悬浮，title上方，side右方加气球，自定义标签的id位置
+                       stripCharsRe: /^(ljc)+$/,//文本框不能出现以ljc开头
+                       vtype: 'email'//校验类型：alpha英文字母，alphnum英文字母和数字，email邮箱，url网页地址
+                       //自定义验证参考Vtype.html
+                   },
+                    {//文件框
+                        name: 'file',
+                        fieldLabel: 'File',
+                        inputType: 'file'
+                    },
+                    { //文本域
+                        xtype: 'textarea',
+                        fieldLabel: 'Intro',
+                        anchor: '80%, 30%'
+                    },
+                     { //数字框
+                         xtype: 'numberfield',
+                         fieldLabel: 'Salary',
+                         decimalPrecision: 3,
+                         minValue: 0.0001, minText: '數值過小',
+                         maxValue: 100000, maxText: '數值過大',
+                         msgTarget: 'side'//错误消息位置：under下方，qtip默认的，鼠标悬浮，title上方，side右方加气球，自定义标签的id位置
+                     },
+                     {
+                         xtype: 'hiddenfield',
+                         name: 'hh',
+                         value: 'value from hidden field'
+                     },//隐藏
+                ],
+                buttons: [
+                   {
+                       xtype: 'button', text: 'Sub', formBind: true, handler: function () {
+
+                           var myForm = form.getForm();
+                           //Ext.Ajax.request({
+                           //    url: '/Index_001/up',
+                           //    params: {
+                           //        u: Ext.fly('u').getValue(),
+                           //        p: Ext.fly('p').getValue()
+                           //    },
+                           //    success: function (response) {
+                           //         Ext.Msg.alert(response.responseText);
+                           //        // process server response here
+                           //    }
+                           //});
+                           myForm.submit({
+                               url: '/Index_001/up',
+                               success: function (response) {
+                                   Ext.Msg.alert('Success', response.responseText);
+                               },
+                               failure: function (response) {
+                                   Ext.Msg.alert('Failed', response.responseText);
+                               }
+                           });
+                       }, scope: this
+                   },
+				   {
+				       xtype: 'button', text: 'Clear', handler: function () {
+				           form.getForm().reset(); Ext.get('hh').show();
+				       }, scope: this
+				   }
+                ],
+                renderTo: Ext.getBody()
+            });
+            //----------------------
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>

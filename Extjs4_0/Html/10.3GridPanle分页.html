@@ -1,0 +1,105 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            Ext.QuickTips.init();
+
+            var data = [
+			   { id: 1, artist: 'Michael Jackson', title: 'Dirty Dianna', rate: '5' },
+			   { id: 2, artist: 'U2', title: 'With or without you', rate: '5' },
+			   { id: 3, artist: 'Michael Jackson', title: 'Remeber the time', rate: '5' },
+			   { id: 4, artist: 'Michael Jackson', title: 'Beat It', rate: '4' },
+			   { id: 5, artist: 'Pink', title: 'Lonely Girl', rate: '4' },
+			   { id: 6, artist: 'U2', title: 'One', rate: '5' },
+			   { id: 7, artist: 'Christina Aguilera', title: 'Reflection', rate: '4' },
+			   { id: 8, artist: 'Elton John', title: 'This train don\'t stop', rate: '3' },
+			   { id: 9, artist: 'Elton John', title: 'Original Sin', rate: '3' },
+			   { id: 10, artist: 'Michael Jackson', title: 'Blood on the dance floor', rate: '4' }
+            ];
+
+            var store = new Ext.data.JsonStore({
+                fields: ['id', 'artist', 'title', 'rate'],
+                data: data,
+                pageSize: 5, 
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json'
+                    }
+                }
+
+                //proxy:new Ext.ux.data.PagingMemoryProxy(data)
+            });
+
+
+
+            var paginTB = {
+                xtype: 'pagingtoolbar',
+                store: store,
+                pageSize: 5,
+                displayInfo: true,
+                displayMsg: '紀錄： 第{0}筆 - 第{1}筆，共{2}筆',
+                emptyMsg: '沒有資料',
+                //beforePageText:'第',
+                //afterPageText:'頁，共{0}頁'
+            }
+
+            var grid = new Ext.grid.GridPanel({
+                title: 'Favorite Songs',
+                width: 400,
+                height: 180,
+                store: store,
+                viewConfig: {
+                    forceFit: true
+                },
+                columns: [
+				    { header: '序號', dataIndex: 'id', width: 40 },
+				    { header: '歌手', dataIndex: 'artist', width: 100 },
+				    { header: '歌名', dataIndex: 'title', width: 120 },
+				    { header: '評分', dataIndex: 'rate', width: 80, sortable: true }
+                ],
+                defaults: {
+                    resizable: false
+                },
+                //tbar: paginTB,
+                //bbar: paginTB
+                dockedItems: [{
+                    xtype: 'pagingtoolbar',
+                    store: store,   // GridPanel中使用的数据
+                    dock: 'bottom',
+                    displayInfo: true
+                }]
+            });
+             store.load({
+                params: {
+                    // 如果使用分页，在第一次加载时，指定params
+                    start: 0,
+                    limit: 5
+                }
+            });
+            grid.render('container');
+           
+
+
+
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

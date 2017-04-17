@@ -1,0 +1,267 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+    <link href="../Content/ExtClass/DateTimeField/Spinner.css" rel="stylesheet" />
+    <script src="../Content/ExtClass/DateTimeField/Spinner.js"></script>
+    <script src="../Content/ExtClass/DateTimeField/SpinnerField.js"></script>
+    <script src="../Content/ExtClass/DateTimeField/DateTimeField.js"></script>
+    <style type="text/css">
+        span.male_span {
+            background: url(../Content/Img/male.png) no-repeat right;
+            width: 16px;
+            line-height: 16px;
+            padding-left: 10px;
+        }
+
+        span.female_span {
+            background: url(../Content/Img/female.png) no-repeat right;
+            width: 16px;
+            line-height: 16px;
+            padding-left: 10px;
+        }
+
+        span.checked_span {
+            background: url(../Content/Img/checked.png) no-repeat right;
+            width: 16px;
+            line-height: 16px;
+            padding-left: 10px;
+        }
+
+        span.unchecked_span {
+            background: url(../Content/Img/unchecked.png) no-repeat right;
+            width: 16px;
+            line-height: 16px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            //Ext.QuickTip();
+            var data = [
+                   { id: 1, name: 'Aitch', gender: 'M', dob: '1980/02/28', epaper: true },
+                   { id: 2, name: 'David', gender: 'M', dob: '1981/03/01', epaper: true },
+                   { id: 3, name: 'Johny', gender: 'F', dob: '1982/04/02', epaper: false },
+                   { id: 4, name: 'Chris', gender: 'M', dob: '1983/05/03', epaper: true },
+                   { id: 5, name: 'Kelly', gender: 'F', dob: '1984/06/04', epaper: false }
+            ];
+            var store = new Ext.data.JsonStore({
+                fields: [
+                      'id',
+                      { name: 'name', type: 'string' },
+                      { name: 'gender', type: 'string' },
+                      { name: 'dob', type: 'date', dateFormat: 'Y/m/d' },
+                      { name: 'epaper', type: 'boolean' }
+                ],
+                data: data,
+                pageSize: 5,
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json'
+                    }
+                }
+            });
+            //Various editors for the related fields:
+            var textFieldEditor = {
+                xtype: 'textfield',
+                allowBlank: false, blankText: '此欄不可空白',
+                minLength: 2, minText: '最少要填入{0}個字元',
+                maxLength: 20, maxText: '最多只能填入{0}個字元'
+            };
+
+            var genderFieldEditor = {
+                xtype: 'combo',
+                store: new Ext.data.ArrayStore({
+                    fields: ['id', 'label'],
+                    data: [
+                       ['M', '男'],
+                       ['F', '女']
+                    ]
+                }),
+                displayField: 'label',
+                valueField: 'id',
+                forceSelection: true,//强制选择，用户输入的无效
+                mode: 'local'//数据源，local本地数据，remote服务器数据
+            };
+
+
+            var dobFieldEditor = {
+                xtype: 'datefield',
+                allowBlank: false, blankText: '此欄不可空白',
+                editable: false
+                //id: 'time',
+                //xtype: 'datetimefield',
+                //format: 'H:i'
+            };
+
+            var epaperFieldEditor = {
+                xtype: 'checkbox'
+            }
+
+            //Cell renderers:
+            var genderRenderer = function (value) {
+                if (value == 'M') {
+                    return '<span class="male_span">&nbsp;</span>';
+                } else {
+                    return '<span class="female_span">&nbsp;</span>';
+                }
+            }
+
+            var epaperRenderer = function (value) {
+                if (value) {
+                    return '<span class="checked_span">&nbsp;</span>';
+                } else {
+                    return '<span class="unchecked_span">&nbsp;</span>';
+                }
+            };
+            var queryStore = function () {
+                var targeString = Ext.getCmp('queryText').getValue();
+                if (targeString == '') {
+                    return;
+                }
+                store.filterBy(function (record, id) {
+                    if (record.get('name') == targeString) {
+                        return true;
+                    }
+                    return false;
+                })
+            };
+            var insertRecord = function () {
+                var defaultRec = {
+                    id: store.data.length + 1,
+                    name: '',
+                    gender: 'F',
+                    dob: '',
+                    epaper: false
+                };
+                var lastIndex = store.getCount();
+                store.insert(lastIndex, defaultRec);
+            }
+
+            // Delete record
+            var deleteRecord = function () {
+                var selectedCell = grid.getSelectionModel().getSelection();
+                if (selectedCell == null) {
+                    return;
+                }
+                var rowIndex = selectedCell[0];
+                store.remove(rowIndex);
+            }
+            var saveChanges = function () {
+                var modifiedRecords = store.getModifiedRecords();
+                var modifiedRecNum = modifiedRecords.length;
+                if (modifiedRecNum == 0) return;
+                Ext.MessageBox.confirm(
+						'變更資料',
+						'您確定要修改' + modifiedRecNum + '筆記錄嗎？',
+						function (btnLabel) {
+						    if (btnLabel == 'yes') {
+						        grid.stopAnimation();
+						        grid.getEl().mask('資料傳輸中', 'x-mask-loading');
+						        var recordsToServer = [];
+						        Ext.each(modifiedRecords, function (record) {
+						            recordsToServer.push(record.data);
+						        });// eo each
+						        recordsToServer = Ext.encode(recordsToServer);
+
+						        var lastOptions = store.lastOptions;
+						        Ext.apply(lastOptions.params, { records: recordsToServer });
+						        Ext.Ajax.request({
+						            url: '/Index_001/GetDataObj/',
+						            params: lastOptions.params,
+						            callback: function () {
+						                grid.getEl().unmask();
+						            },
+						            success: function (a, b) {
+						                Ext.Msg.alert('提示', a.responseText);
+						                store.commitChanges();
+						            }
+						        });// eo Aja
+						    }
+						    ;// eo confirm()
+						}
+                        )
+            }
+
+            // Reject changes
+            var rejectChanges = function () {
+                var modifiedRecords = store.getModifiedRecords();
+                var modifiedRecNum = modifiedRecords.length;
+                //modifiedRecords.forEach(function (index,value) {
+                //    //alert(JSON.stringify(index.data))
+                //})
+                if (modifiedRecNum == 0) return;
+                Ext.MessageBox.confirm(
+                        '變更資料',
+                        '您確定要復原' + modifiedRecNum + '筆記錄嗎？',
+                        function (btnLabel) {
+                            if (btnLabel == 'yes')
+                                store.rejectChanges();
+                        }
+                );// eo confirm()
+            }
+            var grid = new Ext.grid.GridPanel({
+                title: 'My GridPanel',
+                width: 800,
+                height: 400,
+                store: store,
+                viewConfig: {
+                    forceFit: true
+                },
+                selType: 'rowmodel',
+                plugins: [
+                    Ext.create('Ext.grid.plugin.RowEditing', {
+                        clicksToEdit: 2
+                    })
+                ],
+                columns: [
+                    { header: '序號', dataIndex: 'id', width: 30 },
+                    { header: '姓名', dataIndex: 'name', width: 150, editor: textFieldEditor },
+                    { header: '性別', dataIndex: 'gender', width: 40, renderer: genderRenderer, editor: genderFieldEditor },
+                    { header: '生日', dataIndex: 'dob', width: 100, renderer: Ext.util.Format.dateRenderer('Y/m/d/ H:i:s'), editor: dobFieldEditor },
+                    { header: '訂閱電子報', dataIndex: 'epaper', renderer: epaperRenderer, editor: epaperFieldEditor }
+                ],
+                defaults: {
+                    resizable: false
+                },
+                tbar: [
+                        { xtype: 'textfield', emptyText: '请输入关键字...', width: 200, id: 'queryText' },
+                        { xtype: 'button', text: '查询', handler: queryStore },
+                        { xtype: 'button', text: '插入新資料', iconCls: 'insertBtn', handler: insertRecord },
+                        { xtype: 'button', text: '刪除資料', iconCls: 'removeBtn', handler: deleteRecord }
+                ],
+                bbar: {
+                    xtype: 'pagingtoolbar',
+                    store: store,   // GridPanel中使用的数据
+                    dock: 'bottom',
+                    displayInfo: true,
+                    items: [
+                    '-',
+                    { xtype: 'button', text: '儲存', handler: saveChanges, scope: this },
+                    { xtype: 'button', text: '還原', handler: rejectChanges, scope: this }
+                    ]
+                },
+                renderTo: 'container'
+            });
+            store.load({ params: { start: 0, limit: 5 } });
+
+        });
+        //listeners center  fields
+
+
+    </script>
+
+</body>
+</html>

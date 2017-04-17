@@ -1,0 +1,32 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <input type="button" id="btn" value="Show" />
+    <script>
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+            function clickBtn(event, eventTarget)
+            {
+                //event.preventDefault()//阻止默认行为
+                //event.stopPropagation()//停止冒泡事件
+                alert('ID:'+eventTarget.id);
+            }
+            Ext.EventManager.addListener('btn', 'click', clickBtn);
+            Ext.EventManager.removeListener('btn', 'click', clickBtn);
+
+        });
+
+
+    </script>
+
+</body>
+</html>

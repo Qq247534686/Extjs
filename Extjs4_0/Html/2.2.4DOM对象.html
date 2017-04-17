@@ -1,0 +1,46 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>2.2.4DOM对象</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+    <style>
+        .bg {
+            background-color:aquamarine;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+           //创建一个div
+            Ext.getBody().createChild({
+                tag:'div',
+                id:'myDiv'
+            });
+            var myPanel = new Ext.Panel({
+                title: 'Hello',
+                width: 200,
+                height: 500,
+                id: 'myPanel',
+                html: '<h1>Hello</h1>',
+                renderTo:Ext.get('myDiv')//绑定对象到什么位置
+            });
+            var getContect = function () {
+                var panel = Ext.getCmp('myPanel')//根据id获得组件
+                panel.body.highlight();
+            };
+            getContect.defer(12000);
+        });
+
+
+    </script>
+
+</body>
+</html>

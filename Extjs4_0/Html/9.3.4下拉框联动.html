@@ -1,0 +1,116 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+           var brandStore = new Ext.data.JsonStore({
+               fields: ['id', 'name'],
+                proxy: {
+                    type: 'ajax',
+                    actionMethods: {
+                        create: 'POST',
+                        read: 'POST', // by default GET
+                        update: 'POST',
+                        destroy: 'POST'
+                    },
+                    url: '/Index_001/getUsers001/',
+                    reader: {
+                        type: 'json',
+                        totalProperty: 'count',
+                        root:'data'
+                    }
+                }
+			});
+
+			var productStore = new Ext.data.JsonStore({
+				fields:[ 'id', 'name' ],
+				 proxy: {
+                    type: 'ajax',
+                    actionMethods: {
+                        create: 'POST',
+                        read: 'POST', // by default GET
+                        update: 'POST',
+                        destroy: 'POST'
+                    },
+                    url: '/Index_001/getUsers002/',
+                    reader: {
+                        type: 'json',
+                        totalProperty: 'count',
+                        root:'data'
+                    }
+                }
+			});
+
+			var brands = {
+				xtype:'combo',
+				fieldLabel:'Brand',
+				id:'brandCB',
+				store:brandStore,
+				typeAhead:false,
+				forceSelection:true,
+				editable:false,
+				displayField:'name',
+				valueField:'id',
+				triggerAction:'all',
+				mode:'remote'
+			};
+
+			var products = {
+				xtype:'combo',
+				fieldLabel:'Product',
+				id:'productCB',
+				store:productStore,
+				typeAhead:false,
+				forceSelection:true,
+				editable:false,
+				displayField:'name',
+				valueField:'id',
+				triggerAction:'all',
+				mode:'local',
+				disabled:true
+			};
+
+			var form = new Ext.form.FormPanel({
+				title:'FormPanel',
+				width:280,
+				height:100,
+				frame:true,
+				labelWidth:55,
+				items:[
+					brands,
+					products
+				]
+			});
+			form.on('render', function(){
+				var brands = Ext.getCmp('brandCB');
+				brands.on('select', function(combo, record, index){
+					var brandID = brands.getValue();
+					Ext.getCmp('productCB').setValue();
+					Ext.getCmp('productCB').enable();
+					productStore.load({params:{ brandID:brandID }});
+				});
+			});
+			
+			form.render('container');
+           
+
+        });
+        //listeners center  fields
+        
+
+    </script>
+
+</body>
+</html>

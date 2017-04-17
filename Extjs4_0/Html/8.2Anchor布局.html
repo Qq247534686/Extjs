@@ -1,0 +1,61 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            Ext.onReady(function () {
+
+                var ipnl1 = { xtype: 'panel', title: 'Panel1', html: ' anchor: "宽:50%,高: 40%"', anchor: '50%, 40%', frame: true };
+                var ipnl2 = { xtype: 'panel', title: 'Panel2', html: ' anchor: "宽:0, 高:45%"', anchor: '0, 45%', frame: true };
+                var ipnl3 = { xtype: 'panel', title: 'Panel3', html: ' anchor: "宽:-50, 高:-200"', anchor: '-50, -200', frame: true };
+                var ipnl4 = { xtype: 'panel', title: 'Panel4', html: ' anchor: "宽:-100,高: 100%"', anchor: '-100, 100%', frame: true };
+
+                var ppnl = new Ext.Panel({
+                    title: 'Percent AnchorLayout',
+                    width: 300,
+                    height: 300,
+                    frame: false,
+                    html: ' anchor: "宽:300,高: 300"',
+                    layout: 'anchor',
+                    items: [
+                        ipnl1, ipnl2
+                    ],
+                    renderTo: Ext.getBody()
+                });
+
+                var apnl = new Ext.Panel({
+                    title: 'Absolute AnchorLayout',
+                    width: 300,
+                    height: 300,
+                    frame: false,
+                     html: ' anchor: "宽:300,高: 300"',
+                    layout: 'anchor',
+                    items: [
+                        ipnl3, ipnl4
+                    ],
+                    renderTo: Ext.getBody()
+                });
+
+            });
+
+
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>

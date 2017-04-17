@@ -1,0 +1,100 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var panelss = new Ext.Panel({
+                title: 'Absolute Layout',
+                width: 200,
+                height: 150,
+                layout: 'absolute',
+                frame: true,
+                items: [
+				   { xtype: 'box', html: 'Box1', width: 100, height: 30, x: 10, y: 10 },
+				   { xtype: 'box', html: 'Box2', width: 100, height: 30, x: 20, y: 20 },
+				   { xtype: 'box', html: 'Box3', width: 100, height: 30, x: 30, y: 30 }
+                ],
+                renderTo: Ext.getBody()
+            });
+            var panel = null;
+            var compoNum = 12;
+            var angel = 0;
+            var dx = 0;
+            var dy = 0;
+            var count = 1;
+            var radius = 50;
+            var centX = 300 / 2 - radius / 4;
+            var centY = 180 / 2 - radius / 2;
+            var angelPerComp = Math.ceil(360 / compoNum) / 180 * 3.14159;
+            var ay = [];
+            var addCompInCircle = function () {
+                while (count < 13) {
+                    if (panel != null && count <= compoNum) {
+                        angel += angelPerComp;
+                        dx = centX + radius * Math.sin(angel);
+                        dy = centY - radius * Math.cos(angel);
+                        //console.info("X:%f, Y:%f, A:%f", dx, dy, angel);
+                        panel.add({ xtype: 'box', html: '' + count, x: dx, y: dy, width: 50, height: 50 });
+                        panel.doLayout();
+                        count++;
+                    }
+                }
+            }
+            var addCompInCircle = function () {
+                if (panel != null && count <= compoNum) {
+                    if (panel != null && count <= compoNum) {
+                        angel += angelPerComp;
+                        dx = centX + radius * Math.sin(angel);
+                        dy = centY - radius * Math.cos(angel);
+                        //console.info("X:%f, Y:%f, A:%f", dx, dy, angel);
+                        panel.add({ xtype: 'box', html: '' + count, x: dx, y: dy, width: 50, height: 50 });
+                        if (count == 12) {
+                            panel.add({ xtype: 'box', html: '*', x: dx + 4, y: centY, width: 20, height: 20 });
+                            panel.add({ xtype: 'box', html: '↑', x: dx + 4, y: centY - 8, width: 20, height: 20 });
+                            panel.add({ xtype: 'box', html: '→', x: dx + 5, y: centY - 4, width: 20, height: 20 });
+                        }
+                        count++;
+                        panel.doLayout();
+                    }
+                } else {
+                    Ext.TaskManager.stop(addCompInCircle)
+                }
+            }
+            panel = new Ext.Panel({
+                title: 'Absolute Layout',
+                width: 300,
+                height: 180,
+                layout: 'absolute',
+                frame: true,
+                listeners: {
+                    afterrender: function (panel, eOpts) {
+                        Ext.TaskManager.start({
+                            run: addCompInCircle,
+                            interval: 200
+                        });
+                    }
+                },
+                renderTo: Ext.getBody()
+            });
+
+
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>

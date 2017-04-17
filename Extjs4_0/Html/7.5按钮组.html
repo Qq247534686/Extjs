@@ -1,0 +1,39 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+   
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            new Ext.ButtonGroup({
+                renderTo: Ext.getBody(),
+                columns: 4,
+               
+                items: [
+                    { xtype: 'button', scale: 'large', text: 'Btn1', icon: '../resources/ext-theme-neptune/images/shared/icon-error.png' },
+                    { xtype: 'button', scale: 'large', text: 'Btn2' },
+                    { xtype: 'button', scale: 'large', text: 'Btn3' },
+                    { xtype: 'button', scale: 'large', text: 'Btn4' }
+                ]
+
+            })
+
+
+        });
+        //listeners center
+
+    </script>
+
+</body>
+</html>

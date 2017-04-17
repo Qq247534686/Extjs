@@ -1,0 +1,203 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+
+
+        Ext.onReady(function () {
+            Ext.define("TreeTest", {
+                extend: "Ext.data.Model",
+                fields: [
+                    { name: "text", type: "string" },
+                    { name: "id", type: "int" },
+                    { name: "parentId", type: "int" },
+                    { name: "href", type: "string" }
+                ],
+                proxy: {
+                    type: 'ajax',
+                    api: {
+                        read: '/ExtJsTreeCRUD/read/',
+                        create: '/ExtJsTreeCRUD/create/',
+                        destroy: '/ExtJsTreeCRUD/destroy/',
+                        update: '/ExtJsTreeCRUD/update/'
+                    },
+                    reader: {
+                        messageProperty: "Msg",
+                    },
+                    writer: {
+                        type: "json",
+                        encode: true,
+                        root: "data",
+                        allowSingle: false
+                    }
+                }
+            })
+            //在此添加ExtJS代码
+            Ext.create("Ext.data.TreeStore", {
+                id: 'treeStore',
+                model: "TreeTest",
+                //root:{text:"目录",id:-1,expanded:true},
+                listeners: {
+                    move: function (tree, node) {
+                        var me = this;
+                        node.save({
+                            params: {
+                                id: node.data.id
+                            },
+                            failure: function (e, op) {
+                                Ext.Msg.alert("发生错误", "保存移动时发生错误，现在要刷新树！<br/>"
+										+ "错误原因：" + op.error, function () {
+										    this.load();
+										}, me);
+                            },
+                            scope: me
+                        });
+                    }
+                }
+            });
+
+            Ext.create("Ext.tree.Panel", {
+                title: "树的动态加载及节点维护",
+                id: 'treepanel',
+                width: 200,
+                height: 300,
+                rootVisible: false,
+                hideHeaders: false,
+                renderTo: Ext.getBody(),
+                store: "treeStore",
+                plugins:[{ptype:"cellediting",
+					listeners:{
+						beforeedit:function(e){
+							if(e.record.isRoot()) return false;
+						},
+						edit:function(edit,e){
+							e.record.save({
+								success:function(rec,opt){
+									opt.records[0].commit();
+								},
+								failure:function(e,op){
+									op.records[0].reject();
+									Ext.Msg.alert("发生错误",op.error);
+								}
+							});
+						}
+					}
+				}],
+                listeners: {
+                     selectionchange: function (view, rs) {
+                        Ext.getCmp("delete").setDisabled(rs.length == 0);
+                    }
+                },
+                tbar: [
+					{
+					    text: "增加", id: "add", handler: function () {
+					        var tree = this.up("treepanel"),
+                                parent = tree.getSelectionModel().getSelection()[0];
+					        if (!parent && parent.data.id != null) {
+					            parent = tree.store.tree.root;
+					        }
+					        Ext.Msg.prompt("提示", "请输入节点名称", function (val, cc) {
+					            if (val == 'ok') {
+					                var rec = new TreeTest({
+					                    text: cc,
+					                    leaf: true,
+					                    parentId: parent.data.id
+					                });
+					                rec.save({
+					                    parentNode: rec,
+					                    success: function (rec, opt) {
+					                        if (opt.parentNode.isExpanded())
+					                        { opt.parentNode.appendChild(rec); }
+					                        else
+					                        { opt.parentNode.expand(); }
+					                        Ext.StoreManager.get('treeStore').reload();
+					                    },
+					                    failure: function (e, op) {
+					                        Ext.Msg.alert("发生错误", "Stop Add");
+					                    },
+					                    scope: tree
+					                });
+					            }
+					        })
+
+
+					    }
+					},
+					{
+					    text: "删除", id: "delete", disabled: false, handler: function () {
+					        var tree = this.up("treepanel");
+					        var rs = tree.getSelectionModel().getSelection();
+					        if (rs.length > 0) {
+					            rs = rs[0];
+					            if (rs.data.root) {
+					                Ext.Msg.alert("删除节点", "根节点不允许删除！");
+					                return;
+					            }
+					            if (rs.isExpandable() || rs.hasChildNodes()) {
+					                Ext.Msg.alert("删除节点", "请先删除所有子节点，再删除该节点！");
+					                return;
+					            } else {
+					                var content = "确定删除节点：" + rs.data.text + "？";
+					                Ext.Msg.confirm("删除节点", content, function (btn) {
+					                    if (btn == "yes") {
+					                        var rs = this.getSelectionModel().getSelection();
+					                        if (rs.length > 0) {
+					                            rs = rs[0];
+					                            rs.remove();
+					                            this.store.sync();
+					                            this.view.select(0);
+					                            this.view.focus(false);
+					                        }
+					                    }
+					                }, tree)
+					            }
+					        }
+					    }
+					},
+					"|",
+					{
+					    text: "刷新", handler: function () {
+					        var option = Ext.StoreManager.get('treeStore').lastOptions;
+					        Ext.StoreManager.get('treeStore').reload();
+					    }
+					}
+                ],
+                columns: [
+					{
+					    xtype: "treecolumn", dataIndex: "text", flex: 1,
+					    field: { allowBlank: false }
+					}
+                ],
+                viewConfig: {
+                    toggleOnDblClick: false,
+                    plugins: {
+                        ptype: 'treeviewdragdrop'
+                    },
+                    listeners: {
+                        refresh: function () {
+                            this.select(0);
+                            this.focus(0);
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

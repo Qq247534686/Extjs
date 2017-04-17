@@ -1,0 +1,72 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+    <style>
+        .fo {
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div id="myDiv">Hello</div>
+     <div id="myBD">Hello</div>
+    <a id="cl" href="#">Click</a>
+    <input type="text" id="tt"  value="123"/>
+    <script>
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+            //Ext.get缓存对象，Extfly不缓存对象
+            var element = Ext.Element.get('myDiv');//简写:Ext.get
+            console.dir(element);
+            //创建节点
+            Ext.get('myDiv').createChild({
+                tag: 'h1',
+                id: 'bbc',
+                cls:'fo',
+                html:'Hi'
+            });
+            //更新节点内容
+            Ext.get('bbc').update('WC');
+            //Ajax更新内容
+            var myLoad={
+                url:'/Index_001/ReturnString/',//请求地址
+                //method: 'GET',//请求方式
+                //params: null,//参数
+                //script: true,//是否启用脚本
+                callback: function (el, success, response, options)
+                {
+                    if (success)
+                    {
+                        Ext.get('bbc').update(response.responseText);
+                         //alert(response.responseText);
+                    }
+                   
+
+                }
+            }
+            Ext.get('myBD').load(myLoad);
+            //获取或者设置标签的属性
+            var cl = Ext.get('cl').getAttribute('href').trim();//获取属性
+            //alert(cl);
+            var ssv = { href: 'http://localhost:58947/Html/2.2.5Cookie.html' };
+            Ext.get('cl').set(ssv);//设置属性
+            var clv = Ext.get('cl').getAttribute('href').trim();
+            //alert(clv);
+            //获取或者设置表单标签的值
+            Ext.get('tt').set({ value: 'AAAAAA' });
+            //alert(Ext.get('tt').getValue());
+            //Ext选择器
+        });
+
+
+    </script>
+
+</body>
+</html>

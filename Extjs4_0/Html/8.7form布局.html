@@ -1,0 +1,58 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="sss"></div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+
+            var panel = new Ext.Panel({
+               
+                width: 500,
+                height: 280,
+                frame: false,
+                layout: 'anchor',
+                labelAlign: 'right',
+                defaults: {
+                    xtype: 'textfield',
+                    labelSeparator: '：'
+                },
+                items: [
+				   { fieldLabel: 'Username', padding: 10, anchor: '-50' },
+				   { fieldLabel: 'Password', padding: 10, anchor: '-50' },
+				   { fieldLabel: 'Email', padding: 10, anchor: '-5' },
+				   { fieldLabel: 'Address', padding: 10, anchor: '-5' },
+				   { fieldLabel: 'Phone', padding: 10, anchor: '-5' },
+                ]
+            });
+            var win = new Ext.Window({
+                maxWidth: 500,
+                minWidth: 500,
+                maxHeight:280,
+                minHeight:280,
+                title: 'Form Layout',
+                layout: 'fit',
+                items: [
+                    panel
+                ]
+            });
+            win.show();
+            
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>

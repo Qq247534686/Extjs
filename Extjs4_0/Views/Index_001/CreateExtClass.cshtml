@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "CreateExtClass";
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateExtClass</title>
+    <link href="~/resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="~/resources/bootstrap.js"></script>
+    <script src="~/locale/ext-lang-zh_CN.js"></script>
+</head>
+<body id="bby">
+    <div id="ddc"></div>
+    <script>
+        ///<reference path="d:\我的文档\visual studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+            //console.time('RunTime')
+            //js创建对象--2016/3/12
+            //var jsCreateClass = {
+            //    name: 'LJC',
+            //    age: function (ageNumber) {
+            //        if (ageNumber > 18) {
+            //            return "成年了";
+            //        }
+            //        return "未成年";
+            //    }
+            //};
+            //Ext对象继承--2016/3/12
+            //var HelloWord = Ext.extend(Ext.window, {
+            //    title: "Hello",
+            //    width: 500,
+            //    height:300,
+            //    initComponent: function () {
+            //        //重写父类的构造函数
+            //        HelloWord.superclass.initComponent.apply(this, arguments);
+            //    }
+
+            //});
+            //var helloWord = new HelloWord({
+            //    items: {
+            //        html:'<h1>Good</h1>'
+            //    }
+            //});
+            //helloWord.show('ddc');
+            var tabPanle =new Ext.TabPanel({
+                title:'测试',
+                activeTab:0,
+                items: [
+                    {title:'123',id:'fil1',html:'<h1>123<h1/>'},
+                    {title:'234',id:'fil2',html:'<h1>123<h1/>'},
+                    {title:'345',id:'fil3',html:'<h1>123<h1/>'}
+            ]
+        });
+        tabPanle.render('bby');
+
+
+
+
+
+        //console.timeEnd('RunTime');
+        //console.info("Log success");
+        //Ext.MessageBox.alert("ExtJS", "Hello ExtJS");
+        });
+
+
+    </script>
+
+</body>
+</html>

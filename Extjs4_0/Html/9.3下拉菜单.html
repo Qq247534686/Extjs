@@ -1,0 +1,97 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="shw">---</div>
+    <script>
+        ///<reference path="D:\我的文档\Visual Studio 2015\Projects\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var arrayStore = new Ext.data.ArrayStore({
+                fields: ['id', 'name', 'age'],
+                data: [
+                   [1, 'L', 11],
+                   [2, 'J', 22],
+                   [3, 'C', 33]
+                ]
+            });
+            var jsonStore = new Ext.data.JsonStore({
+                fields: [
+				   'id', 'name', 'age'
+                ],
+                proxy: {
+                    type: 'ajax',
+                    actionMethods: {
+                        create: 'POST',
+                        read: 'POST', // by default GET
+                        update: 'POST',
+                        destroy: 'POST'
+                    },
+                    url: '/Index_001/getUsers/',
+                    reader: {
+                        type: 'json',
+                        totalProperty: 'count',
+                        root:'data'
+                    }
+                }
+            });
+            var s1 = {
+                xtype: 'combo',
+                fieldLabel: 'ArrayStore',
+                store: arrayStore,
+                displayField: 'name',//指定显示的字段
+                valueField: 'age',//值
+                typeAhead: false,//启用自动填补
+                forceSelection: true,//强制选择，用户输入的无效
+                listeners: {
+                    'select': function (combo, records, eOpts) {
+                        Ext.fly('shw').update(combo.getValue());
+                    }
+                },
+                mode: 'local'//数据源，local本地数据，remote服务器数据
+            };
+            var s2 = new Ext.form.ComboBox({
+                fieldLabel: 'JsonStore',
+                width: 500,
+                store: jsonStore,
+                displayField: 'name',
+                valueField: 'age',//值
+                typeAhead: true,//启用查询
+                triggerAction: 'all',//触发器被点击时执行的操作
+                hideTrigger:false,//变为文本框
+                minChars:2,//输入几个字符开始查询
+                listeners: {
+                    'select': function (combo, records, eOpts) {
+                        Ext.fly('shw').update(combo.getValue());
+                    }
+                },
+                forceSelection: true,
+                mode: 'remote',
+                pageSize: 4,
+                minListWidth: 550
+            });
+            new Ext.Panel({
+                width: 800,
+                height: 200,
+                items: [
+                s1, s2
+                ],
+                renderTo: Ext.getBody()
+            });
+
+        });
+        //listeners center
+
+
+    </script>
+
+</body>
+</html>
