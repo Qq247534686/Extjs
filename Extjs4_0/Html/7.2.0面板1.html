@@ -1,0 +1,57 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var pan = new Ext.Panel({
+                title: '',
+                height: 600,
+                layout: 'column',
+                frame: true,
+                defaults: {
+                    xtype: 'container',
+                    columnWidth: 0.5,
+                    html: 'Hi'
+                },
+                items: [
+                     { style: 'border:1px dotted #F00;',columnWidth:1, height: 100 },
+                     { style: 'border:1px dotted #F00;', html: 'Hello',columnWidth:0.15, height: 450, id: 'lpl' },
+                     { style: 'border:1px dotted #F00;', html: 'Hello', columnWidth: 0.7, height: 450,id:'bd' },
+                     { style: 'border:1px dotted #F00;', html: 'Hello', columnWidth: 0.15, height: 450 },
+                     { style: 'border:1px dotted #F00;', html: 'Hello',columnWidth:1, height: 50 }
+                ],
+                listeners: {
+                    afterrender: function () {
+                        Ext.get('lpl').load({
+                            url: 'HtmlPage1.html'
+                        });
+                        Ext.get('bd').load({
+                            url: '6.2.1调色板.html'
+                        });
+                    }
+                },
+                style: 'border:1px solid #000;padding:0px;margin-left:auto;margin-right:auto;',
+                renderTo: Ext.getBody()
+
+            });
+
+
+        });
+
+
+    </script>
+
+</body>
+</html>

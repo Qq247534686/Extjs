@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+     <link href="../resources/css/ext-all.css" rel="stylesheet" />
+    <script src="../adapter/ext/ext-base.js"></script>
+    <script src="../ext-all.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+      <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var searchPanel = {
+				region:'north', 
+				layout:'hbox',
+			    title:'搜尋',
+			    height:60,
+			    collapsible:true,
+			    items:[ 
+			      { xtype:'box', autoEl:{tag:'img', src:'find.png'} },
+			      { xtype:'box', html:'<b>關鍵字：</b>' },
+			      { xtype:'textfield' },
+	       		  { xtype:'button', text:'開始' },
+			      { xtype:'spacer', width:20 },
+			      { xtype:'box', html:'<b>起始時間：</b>' },
+			      { xtype:'datefield' },
+			      { xtype:'spacer', width:20 },
+			      { xtype:'box', html:'<b>截止時間：</b>' },
+			      { xtype:'datefield' }
+	       		] 
+            };
+            var menuPanel = {
+                region:'west', 
+              	title:'功能',
+              	collapsible:true,
+              	width:80,
+              	padding:10,
+  	    	  	items:[
+	    	     	{ xtype:'button', text:'登出' },
+	    	     	{ xtype:'spacer', height:20 },
+	    	     	{ xtype:'button', text:'管理' },
+	    	     	{ xtype:'spacer', height:20 },
+	    	     	{ xtype:'button', text:'新聞' },
+	    	     	{ xtype:'spacer', height:20 },
+	    	     	{ xtype:'button', text:'寄信' }
+       	      	] 
+    	    };
+    	    var contentPanel = {
+    	    	region:'center',
+     	       	title:'內容',
+     	        collapsible:true,
+     	        width:100,
+    	       	padding:10,
+    	       	html:"Seeing a murder on television... can help work off one's antagonisms. And if you haven't any antagonisms, the commercials will give you some."
+        	};
+
+    		var root = new Ext.Viewport({
+    			layout: 'border',
+    			title:'Nested Demo',
+    			items:[
+				  searchPanel,
+				  menuPanel,
+				  contentPanel
+    	    	]
+    		});
+    		root.render('container');
+    					       		 
+        
+
+        });
+
+
+    </script>
+</body>
+</html>

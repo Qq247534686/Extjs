@@ -1,0 +1,100 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+
+
+            
+			var searchPanel = { 
+				xtype:'panel', 
+			    layout:'hbox',
+			    height:60,
+			    width:795,
+			    frame:true,
+			    //collapsible:true,
+			    items:[ 
+			      { xtype:'box', autoEl:{tag:'img', src:'find.png'} },
+			      { xtype:'box', html:'<b>關鍵字：</b>' },
+			      { xtype:'textfield' },
+	       		  { xtype:'button', text:'開始' },
+			      { xtype:'box', width:20 },
+			      { xtype:'box', html:'<b>起始時間：</b>' },
+			      { xtype:'datefield' },
+			      { xtype:'box', width:20 },
+			      { xtype:'box', html:'<b>截止時間：</b>' },
+			      { xtype:'datefield' }
+	       		] 
+            };
+            var menuPanel = { 
+  	    	  	columnWidth:.25,
+	    	  	height:482,
+	    	  	padding:10,
+	    	  	items:[
+	    	     	{ xtype:'button', text:'登出' },
+	    	     	{ xtype:'box', height:20 },
+	    	     	{ xtype:'button', text:'管理' },
+	    	     	{ xtype:'box', height:20 },
+	    	     	{ xtype:'button', text:'新聞' },
+	    	     	{ xtype:'box', height:20 },
+	    	     	{ xtype:'button', text:'寄信' }
+       	      	] 
+    	    };
+    	    var contentPanel = {
+     	       	title:'內容',
+    	       	columnWidth:.75,
+    	       	height:482,
+    	       	padding:10,
+    	       	html:"Seeing a murder on television... can help work off one's antagonisms. And if you haven't any antagonisms, the commercials will give you some."
+        	};
+
+        	var mainFunctions = {
+   	    	 	layout:'column',
+	    	 	width:800,
+	    	 	frame:false,
+	    	 	height:510,
+	    	 	title:'主要功能',
+	    	 	items:[
+	    	    	menuPanel,
+    	    		contentPanel
+       	     	]
+	        };
+    	    
+    		var root = new Ext.Panel({
+    			width:800,
+    			height:600,
+    			title:'Nested Demo',
+    			tbar:[
+					searchPanel
+    	    	],
+    	    	items:[
+    	    	  mainFunctions
+    	    	]
+    		});
+    		root.render('container');
+    			
+
+
+        });
+
+        /*
+        listeners
+        afterrender
+        render
+        */
+    </script>
+
+</body>
+</html>

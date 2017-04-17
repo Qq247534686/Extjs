@@ -1,0 +1,80 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all.js" />
+        Ext.onReady(function () {
+            var data = [
+                 [1, "David Wang", 27, "Programmer", "1983-01-01"],
+                 [2, "Mary Chen", 25, "Sales", "1985-11-22"],
+                 [3, "Christina Zung", 22, "Accountant", "1988-03-28"],
+                 [4, "Joe Fun", 30, "Lawyer", "1980-05-10"]
+            ];
+            Ext.define('userInfo', {
+                extend: 'Ext.data.Model',
+                fields: [
+                     { name: 'id', type: 'int', mapping: 0 },
+                     { name: 'name', type: 'string', mapping: 1 },
+                     { name: 'age', type: 'int', mapping: 2 },
+                     { name: 'occupation', type: 'string', mapping: 3 },
+                     { name: 'dob', type: 'string', mapping: 4, dataFormat: 'Y-m-d' }
+                ]
+            });
+            var customerStore = new Ext.data.Store({
+                autoLoad: true,
+                model: 'userInfo',
+                data: data,
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json'
+                    }
+                }
+            });
+            var queryField = new Ext.form.TextField({
+                id: 'txt',
+                name: 'queryString',
+                scope: this,
+                enableKeyEvents: true,
+                listeners: {
+                    keyup: function (field, eventObject) {
+                        var queryString = queryField.getValue();
+                        grid.getStore().filter('occupation', queryString);
+                    }
+                }
+            });
+            var grid = new Ext.grid.GridPanel({
+                columns: [
+                  { header: '序號', dataIndex: 'id' },
+                  { header: '姓名', dataIndex: 'name' },
+                  { header: '年齡', dataIndex: 'age' },
+                  { header: '職業', dataIndex: 'occupation' },
+                  { header: '生日', dataIndex: 'dob', renderer: Ext.util.Format.dateRenderer('Y-m-d') }
+                ],
+                tbar: ['-', '搜尋：', queryField, '-', '搜尋：', {
+                    xtype: 'button', // 默认的工具栏类型
+                    text: '按钮',
+                    id:'xxx'
+                }],
+                autoHeight: true,
+                store: customerStore,
+                renderTo: 'container'
+            });
+            //customerStore.loadData();
+        });
+
+
+    </script>
+
+</body>
+</html>

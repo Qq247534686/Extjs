@@ -1,0 +1,97 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>5.2存储对象</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all.js" />
+
+        Ext.onReady(function () {
+            //原始数据-->代理-->读取器-->存储对象
+            /*
+            代理：将数据转换成数组或对象{
+                 HttpProxy:使用HTTP协议读取数据，不可跨域
+                 ScriptTagProxy:使用HTTP协议读取数据，可跨域
+                 MemoryProxy:直接读取内存中的数据，不做额外代理，直接传送给读取器
+                 DirectProxy:使用特殊格式与服务器交换数据
+            }
+            读取器：根据数据的格式存放到与他相关联的字段{
+                ArrayReader:读取数组
+                JsonReader:读取Json
+                XmlReader:读取Xml
+                ArrayStore:封装ArrayReader,直接读取数组
+                JsonStore:封装JsonReader,直接读取Json
+                XmlStore:封装XmlReader,直接读取Xml
+                GroupingStore:封装JsonReader,除了Json数据外，还会按特定的字段进行分类
+            }
+            */
+            // 建立一个store要使用的 model
+            var data = {
+                users: [
+                    {
+                        id: 1,
+                        name: 'Ed Spencer',
+                        phoneNumber: '555 1234'
+                    },
+                    {
+                        id: 2,
+                        name: 'Abe Elias',
+                        phoneNumber: '666 1234'
+                    }
+                ]
+            };
+            var User = Ext.define('User', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    { name: 'id', type: 'int' },
+                    { name: 'name', type: 'string' },
+                    { name: 'phone', type: 'string', mapping: 'phoneNumber' }
+                ]
+            });
+            var store = Ext.create('Ext.data.Store', {
+                autoLoad: true,
+                model: 'User',
+                data: data,
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json',
+                        root: 'users'
+                    }
+                }
+            });
+            //Store的CRUD
+            //添加新的元素
+            store.add({
+                id: 3,
+                name: 'LJC',
+                phoneNumber: '247534686'
+            });
+            var str = '';
+            //遍历元素
+            store.each(function (dt) {
+                str += dt.get('name')+'，';
+            })
+            //查找元素
+            var info = store.query('name', 'LJC');
+            if (info != null) {
+                //更新元素
+                info.getAt(0).set('name', 'ABC');
+                //删除元素
+                store.remove(info.getAt(0));
+            }
+            Ext.Msg.alert('Show', store.data[0]);
+        });
+
+    </script>
+
+</body>
+</html>

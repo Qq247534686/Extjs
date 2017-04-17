@@ -1,0 +1,126 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <!-- <fieldset style="margin:5px;">
+          <legend>ColorPalette</legend>
+          <div id="myColor"></div>
+      </fieldset>
+      <fieldset style="margin:5px;">
+          <legend>Button</legend>
+          <div id="myButton"></div>
+      </fieldset>
+       -->
+    <fieldset style="margin:5px;">
+        <legend>SplitButton</legend>
+        <div id="mySpBtn"></div>
+        <div id="s1"></div>
+    </fieldset>
+
+    <fieldset style="margin:5px;">
+        <legend>Menu</legend>
+        <div id="myMenu"></div>
+        <div id="s2"></div>
+    </fieldset>
+    <fieldset style="margin:5px;">
+        <legend>DatePicker</legend>
+      
+        <div id="myDate"></div>
+          <div id="s3"></div>
+    </fieldset>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            /*
+             var cp = new Ext.ColorPalette({value:'000000', renderTo:'myColor'});
+             cp.on('select', function(palette, selColor){
+                 console.info("Color selected:#"+selColor);
+             });
+
+             var editBtn = new Ext.Button({
+                 text:'編輯',
+                 renderTo:'myButton',
+                 width:80,
+                 scope:this,
+                 handler:function(btn){
+                     console.info(btn.text+" clicked.");
+                 }
+             });
+             */
+             var menu = new Ext.menu.Menu({
+                renderTo: 'myMenu',
+                width: 200,
+                floating: false,
+                defaults: {
+                    group: 'ddd',
+                    checked: false,
+                    checkHandler: function (item, checked) {
+                        if (checked) {
+                            Ext.fly('s2').update("User selected color:" + item.text);
+                        }
+                    }
+                },
+                items: [
+                       { text: '紅' },
+                       { text: '黃' },
+                       { text: '藍' }
+                ]
+            });
+
+            var setColorHandler = function (item, checked) {
+                if (checked) {
+                    Ext.fly('s1').update("User selected color:" + item.text);
+                }
+            }
+            var spBtn = new Ext.SplitButton({
+                text: '顏色',
+                renderTo: 'mySpBtn',
+                menu: {
+                    defaults: {
+                        group: 'ddd',
+                        checked: false,
+                        checkHandler: setColorHandler
+                    },
+                    items: [
+                       { text: '紅' },
+                       { text: '黃' },
+                       { text: '藍' }
+                    ]
+                }
+            });
+            var dp = new Ext.DatePicker({
+                showTody: true,
+                renderTo: 'myDate',
+                listeners: {
+                    select: function (datePicker, selDate) {
+                        Ext.fly('s3').update("Date:" + handlerDate(selDate));
+                    }
+                }
+            });
+            function handlerDate(date) {
+                var dt = new Date(date);
+                var str = '';
+                str = dt.getFullYear() + '年' + (dt.getMonth() + 1) + '月' + dt.getDate() + '日 ' + dt.getHours() + ':' + dt.getSeconds() + ':' + dt.getMinutes();
+                return str;
+            }
+           
+
+
+
+
+        });
+
+
+    </script>
+
+</body>
+</html>

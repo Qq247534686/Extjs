@@ -1,0 +1,69 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var ppd = new Ext.Panel({
+                title: 'Hello',
+                width: 500,
+                height: 300,
+                frame: false,//消除边框
+                collapsible:true,//启用折叠
+                layout: {
+                    type: 'vbox',
+                    align: 'right'
+                },
+                tools: [{
+                    type: 'refresh',
+                    tooltip: 'Refresh form Data',
+                    // hidden:true,
+                    handler: function (event, toolEl, panel) {
+                        // 实现逻辑
+                    }
+                },
+                {
+                    type: 'help',
+                    tooltip: 'Get Help',
+                    handler: function (event, toolEl, panel) {
+                        // 在此显示帮助信息
+                    }
+                }
+                ],
+                tbar: [
+                     '->',//靠右
+                     { xtype: 'button', text: 'top' },
+                     '-',//分割线
+                     '',//插入空格
+                     { xtype: 'button', text: 'top' }
+                ],
+                bbar: [
+                     { xtype: 'button', text: 'down',style:'color:red;'}
+                ],
+                html: '<h1>123</h1>',
+                renderTo: Ext.getBody()
+            })
+
+
+        });
+
+        /*
+        listeners
+        afterrender
+        render
+        */
+    </script>
+
+</body>
+</html>

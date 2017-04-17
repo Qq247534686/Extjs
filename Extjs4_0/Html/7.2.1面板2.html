@@ -1,0 +1,48 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+     <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            var container = new Ext.Panel({
+    			width:300,
+    			height:180,
+    			title:'Panel Demo',
+    			frame:true
+    		});
+            container.render('container');
+            container.hide();
+    		var addItems = function () {
+    		    container.el.fadeIn();
+                container.show();
+        		container.add({ xtype:'button',text:'Button1' });
+        		container.add({ xtype:'button',text:'Button2' });
+        		container.add(new Ext.Button({ text:'Button3' }));
+    		};
+    		var refresh = function () {
+    		    container.el.fadeOut();
+    		};
+    		refresh();
+    		addItems();
+        	
+        	
+        
+
+        });
+
+
+    </script>
+
+</body>
+</html>

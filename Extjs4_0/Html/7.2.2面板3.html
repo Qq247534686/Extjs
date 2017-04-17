@@ -1,0 +1,78 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+
+            var pan = new Ext.Panel({
+                title: '',
+                height: 600,
+                layout: 'column',
+                frame: true,
+                defaults: {
+                    xtype: 'container',
+                    columnWidth: 0.5,
+                    html: 'Hi'
+                },
+                items: [
+                     { style: 'border:1px dotted #F00;', html: '<h1>1</h1>', columnWidth: 1, height: 100 },
+                     { style: 'border:1px dotted #F00;', html: '<h1>2</h1>', columnWidth: 0.15, height: 450, id: 'lpl' },
+                     { style: 'border:1px dotted #F00;', html: '<h1>3</h1>', columnWidth: 0.7, height: 450, id: 'sf' },
+                     {
+                         style: 'border:1px dotted #F00;', html: '<h1>4</h1>', columnWidth: 0.15, height: 450, id: 'bd',
+                         items: [
+                             { html: 'Panel1', id: 'pn1' },
+    			             { html: 'Panel2', id: 'pn2' }
+                         ]
+                     },
+
+                ],
+                listeners: {
+                    render: function (obj, eOpts) {
+                        //插入组件
+                        var len = obj.items.getCount();
+                        obj.insert(len, { style: 'border:1px dotted #F00;', html: '<h1>Insert</h1>', columnWidth: 1, height: 50 });
+                        //移动组件
+                        //var sd = Ext.getCmp('lpl');
+                        //obj.insert(3, sd);
+                        //var gh = Ext.getCmp('bd');
+                        //obj.insert(1, gh);
+                        //替换组件
+                        //var btn = new Ext.Container({
+                        //    html: '<h1>Replace</h1>',
+                        //    style: 'border:1px dotted #F00;',
+                        //    columnWidth: 0.15,
+                        //    height: 450
+                        //});
+                        //obj.items.replace('lpl', btn);
+                        //Ext.fly('lpl').remove();//删除组件
+                        //查找组件
+                        var panels = Ext.getCmp('bd').items.findBy(function (comp, key) {
+                            if (typeof comp.defaultType != "undefined" && comp.defaultType == 'panel') {
+                                return true;
+                            }
+                        });
+                    }
+                },
+                style: 'border:1px solid #000;padding:0px;margin-left:auto;margin-right:auto;',
+                renderTo: Ext.getBody()
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>

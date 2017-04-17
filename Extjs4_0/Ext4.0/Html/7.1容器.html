@@ -1,0 +1,68 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all.css" rel="stylesheet" />
+    <script src="../adapter/ext/ext-base.js"></script>
+    <script src="../ext-all.js"></script>
+    <style>
+        .br {
+            border: solid blue 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            /*
+            new Ext.Container({
+                renderTo: Ext.fly('d1'),
+                width: 300,
+                height: 150,
+                cls: 'br',
+                layout: 'column',
+                items: [
+                    { xtype: 'container', html: 'hello', columnWidth: 0.5, style: 'background-color:red;', id: 'p1' },
+                    { xtype: 'container', html: 'Hi', columnWidth: 0.5, style: 'background-color:green;', id: 'p2' }
+                ]
+            });
+            */
+            var container = new Ext.Container({
+				width:300,
+				height:180,
+				layout:'column',
+				defaults:{
+					xtype:'container',
+					columnWidth:.5,
+					html:'Rocket QUEEN~'
+				},
+				items:[
+					{ style:'border:1px dotted #F00;', id:'subCont1' },
+					{ style:'border:1px dotted #00F;', id:'subCont2' }
+				],
+				style:'border:2px solid #000;padding:5px;'	
+			});
+			container.on('afterrender', function(){
+				Ext.getCmp('subCont1').el.load({
+				    url:'../../Html/HtmlPage1.html',
+					timeout:3,
+					success:function(reponse, opts){
+						alert('讀取完畢');
+					}
+				});
+			});
+			container.render('d2');
+
+        });
+
+
+    </script>
+
+</body>
+</html>

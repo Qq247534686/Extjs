@@ -1,0 +1,42 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../resources/css/ext-all-neptune.css" rel="stylesheet" />
+     <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../resources/bootstrap.js"></script>
+    <script src="../locale/ext-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        ///<reference path="D:\我的文档\Tencent Files\3507523688\FileRecv\Extjs\Extjs4_0\resources\ext-all-dev.js" />
+        Ext.onReady(function () {
+            button = { xtype:'button', text:'XTYPE Rocks', id:'clickBtn' };
+    		newStylePanel = new Ext.Panel({
+        		title:'使用XTYPE',
+                frame:'true',
+                width:300,
+                height:180,
+                items:[
+					button
+                ],
+                listeners: {
+                    render: function(){
+                        Ext.getCmp('clickBtn').on('click', function(btn, eventObj){
+                            alert("You clicked me~");
+                        })}
+                },
+                renderTo:'container'
+        	});
+
+        });
+
+
+    </script>
+
+</body>
+</html>
